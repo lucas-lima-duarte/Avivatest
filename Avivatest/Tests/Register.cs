@@ -1,6 +1,8 @@
 using NUnit.Framework;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
+using System.Threading;
+using System;
 
 namespace Avivatest
 {
@@ -12,7 +14,9 @@ namespace Avivatest
         public void Setup()
         {
             //Navega para a pagina de registro
-            driver.Navigate().GoToUrl("http://eaapp.somee.com/Account/Register");                     
+            driver.Navigate().GoToUrl("http://eaapp.somee.com/Account/Register");
+            Thread.Sleep(1000);
+            ((ITakesScreenshot)driver).GetScreenshot().SaveAsFile(DateTime.Now + "Navigate_to_register_screen.png");
         }
 
         [Test]
@@ -28,13 +32,12 @@ namespace Avivatest
             IWebElement btnRegister = driver.FindElement(By.CssSelector("input[value='Register']"));
 
             //Prenche o formulario de cadastro & submete
-            inputUsername.SendKeys("lucas_avivatech");
+            inputUsername.SendKeys("l.aviv");
             inputPassword.SendKeys("Senha123@");
             inputConfirmPassword.SendKeys("Senha123@");
-            inputEmail.SendKeys("lucas@avivatech.com.br");
+            inputEmail.SendKeys("lucas@avivatec.com.br");
             btnRegister.Click();
 
-            Assert.Pass();
         }
 
         [TearDown]
