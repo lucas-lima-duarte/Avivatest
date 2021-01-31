@@ -21,11 +21,13 @@ namespace Avivatest
             //Navega para a pagina principal
             driver.Navigate().GoToUrl("http://eaapp.somee.com");
             Thread.Sleep(1000);
+
             Utils.TakeScreenshot("Tela principal", driver);
 
             //Navega para a pagina de registro
             driver.FindElement(By.Id("registerLink")).Click();
             Thread.Sleep(1000);
+
             Utils.TakeScreenshot("Tela de cadastro", driver);
         }
 
@@ -45,11 +47,13 @@ namespace Avivatest
             //Efetua o log-out pós cadastro e faz o login do usuário recem cadastrado
             driver.FindElement(By.Id("logoutForm")).Submit();
             driver.FindElement(By.Id("loginLink")).Click();
+
             Utils.TakeScreenshot("Tela de Login", driver);
 
             driver.FindElement(By.Id("UserName")).SendKeys(username);
             driver.FindElement(By.Id("Password")).SendKeys(password);
             driver.FindElement(By.CssSelector("input[value='Log in']")).Click();
+
             Utils.TakeScreenshot("Usuário logado com sucesso", driver);
 
             Assert.AreEqual(@$"Hello {username}!", driver.FindElement(By.CssSelector("a[title='Manage']")).Text);

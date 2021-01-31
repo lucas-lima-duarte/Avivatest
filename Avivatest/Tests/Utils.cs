@@ -16,6 +16,7 @@ namespace Avivatest.Tests
               .Select(s => s[random.Next(s.Length)]).ToArray());
         }
 
+        //Metodo para tirar prints da tela passando o nome como parametro
         public static void TakeScreenshot(string name, IWebDriver driver)
         {
             ((ITakesScreenshot)driver).GetScreenshot().SaveAsFile(@$"..\..\..\Screenshots\{DateTime.Now.ToString("yyyy-MM-dd-HH-mm")} - {name}.png", ScreenshotImageFormat.Png);
