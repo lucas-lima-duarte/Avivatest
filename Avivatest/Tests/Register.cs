@@ -1,20 +1,25 @@
+using Avivatest.Tests;
 using NUnit.Framework;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
-using System.Threading;
 using System;
 using System.Linq;
-
-// Impeditivos: Nao estou conseguindo salvar a print no diretorio correto
-//              Organizar melhor o codigo para que as variaveis sejam acatadas
-//              
-
+using System.Reflection;
+using System.Threading;
+             
 namespace Avivatest
 {
     public class RegisterTest
     {
         IWebDriver driver = new ChromeDriver();
         private static Random random = new Random();
+
+        //Declara os campos aleatorios
+        string username = RandomString(6);
+        string email = RandomString(6) + "@avivatec.com";
+        string password = "Senha123@";
+
+        //Metodo para gerar uma string aleatoria de tamanho N
         public static string RandomString(int length)
         {
             const string chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
@@ -22,26 +27,24 @@ namespace Avivatest
               .Select(s => s[random.Next(s.Length)]).ToArray());
         }
 
+
+
         [SetUp]
         public void Setup()
         {
             //Navega para a pagina principal
             driver.Navigate().GoToUrl("http://eaapp.somee.com");
             Thread.Sleep(1000);
-            ((ITakesScreenshot)driver).GetScreenshot().SaveAsFile("../../../Screenshots " + DateTime.Now.ToString("dd-MM-yyyy") + " Pagina principal.png", ScreenshotImageFormat.Png);
+            Utils.TakeScreenshot("Pagina Inicial", driver);
 
             //Navega para a pagina de registro
             driver.FindElement(By.Id("registerLink")).Click();
             Thread.Sleep(1000);
-            ((ITakesScreenshot)driver).GetScreenshot().SaveAsFile("../../../Screenshots " + DateTime.Now.ToString("dd-MM-yyyy") + " Pagina de registro.png", ScreenshotImageFormat.Png);
-
-            //Declara os campos aleatorios
-            var username = RandomString(6);
-            var email = RandomString(6) + "@avivatec.com";
+            Utils.TakeScreenshot("Pagina de Registro", driver);
         }
 
         [Test]
-        public void Register()
+        public void RegisterAndLogin()
         {
             //Inputs
             IWebElement inputUsername = driver.FindElement(By.Name("UserName"));
@@ -54,13 +57,25 @@ namespace Avivatest
 
             //Prenche o formulario de cadastro & submete
             inputUsername.SendKeys(username);
-            inputPassword.SendKeys("Senha123@");
-            inputConfirmPassword.SendKeys("Senha123@");
+            inputPassword.SendKeys(password);
+            inputConfirmPassword.SendKeys(password);
             inputEmail.SendKeys(email);
             btnRegister.Click();
             Thread.Sleep(1000);
 
-            ((ITakesScreenshot)driver).GetScreenshot().SaveAsFile("../../../Screenshots " + DateTime.Now.ToString("dd-MM-yyyy") + " Usuario registrado.png", ScreenshotImageFormat.Png);
+            Utils.TakeScreenshot("Teste", driver);
+
+            driver.FindElement(By.Id("logoutForm")).Submit();
+
+            driver.FindElement(By.Id("loginLink")).Click();
+
+            driver.FindElement(By.Id("UserName")).SendKeys(username);
+            driver.FindElement(By.Id("Password")).SendKeys(password);
+
+            driver.FindElement(By.CssSelector("input[value='Log in']")).Click();
+
+
+            Assert.AreEqual(username, "assert");
 
 
         }
@@ -68,7 +83,6 @@ namespace Avivatest
         [TearDown]
         public void CloseUp()
         {
-            driver.Close();
         }
     }
 }
