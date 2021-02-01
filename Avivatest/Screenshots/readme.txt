@@ -1,0 +1,1 @@
+﻿Diretorio destinado a salvar evidencias dos testes automatizados
