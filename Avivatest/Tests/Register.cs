@@ -10,10 +10,10 @@ namespace Avivatest
     {
         IWebDriver driver = new ChromeDriver();
 
-        //Declara os campos para preenchimento do formulário
+        //Declara os campos para preenchimento do formulï¿½rio
         string username = Utils.RandomString(6);
         string email = Utils.RandomString(6) + "@avivatec.com";
-        string password = "Senha123@";
+        string password = "Senha123456789@Bisnaguinha.com";
 
         [SetUp]
         public void Setup()
@@ -44,7 +44,7 @@ namespace Avivatest
 
             Utils.TakeScreenshot("Cadastro efetuado", driver);
 
-            //Efetua o log-out pós cadastro e faz o login do usuário recem cadastrado
+            //Efetua o log-out pï¿½s cadastro e faz o login do usuï¿½rio recem cadastrado
             driver.FindElement(By.Id("logoutForm")).Submit();
             driver.FindElement(By.Id("loginLink")).Click();
 
@@ -54,7 +54,7 @@ namespace Avivatest
             driver.FindElement(By.Id("Password")).SendKeys(password);
             driver.FindElement(By.CssSelector("input[value='Log in']")).Click();
 
-            Utils.TakeScreenshot("Usuário logado com sucesso", driver);
+            Utils.TakeScreenshot("Usuï¿½rio logado com sucesso", driver);
 
             Assert.AreEqual(@$"Hello {username}!", driver.FindElement(By.CssSelector("a[title='Manage']")).Text);
         }
