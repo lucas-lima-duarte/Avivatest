@@ -13,7 +13,7 @@ namespace Avivatest
         //Declara os campos para preenchimento do formul�rio
         string username = Utils.RandomString(6);
         string email = Utils.RandomString(6) + "@avivatec.com";
-        string password = "Senha123456789@Bisnaguinha.com";
+        string password = "";
 
         [SetUp]
         public void Setup()
